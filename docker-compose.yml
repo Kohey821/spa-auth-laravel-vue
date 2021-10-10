@@ -1,0 +1,50 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    command: php artisan serve --host=0.0.0.0 --port=8000
+    depends_on:
+      - db
+      - mail
+    environment:
+      APP_ENV: docker
+    ports:
+      - 8000:8000
+    restart: always
+    volumes:
+      - ./backend:/app
+
+  db:
+    image: mariadb
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_USER: ${DB_USERNAME}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+    restart: always
+    volumes:
+      - volume-db:/var/lib/mysql
+
+  db-admin:
+    image: phpmyadmin
+    depends_on:
+      - db
+    environment:
+      PMA_ARBITRARY: 1
+      PMA_HOST: db
+      PMA_USER: ${DB_USERNAME}
+      PMA_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - 8888:80
+    restart: always
+
+  mail:
+    image: mailhog/mailhog
+    ports:
+      - 1025:1025
+      - 8025:8025
+    restart: always
+
+volumes:
+  volume-db:

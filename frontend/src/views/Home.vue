@@ -1,5 +1,5 @@
 <template>
-  <div class="home">
-    Home
+  <div class="p-4 bg-white rounded shadow-md bg-opacity-50">
+      Home
   </div>
 </template>

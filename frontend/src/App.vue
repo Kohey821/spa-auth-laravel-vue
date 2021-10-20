@@ -1,3 +1,7 @@
+<script setup lang="ts">
+import RouterLink from './components/RouterLink.vue';
+</script>
+
 <template>
   <div class="fixed flex flex-col w-full h-full text-xs blur bg-gradient-to-r from-purple-400 via-pink-400 via-green-400 to-red-400">
     <div class="flex-auto p-4 overflow-y-auto">
@@ -5,33 +9,29 @@
     </div>
 
     <div class="flex justify-center flex-none bg-white bg-opacity-50">
-      <router-link
-        class="p-3 hover:bg-pink-500 hover:text-white transition-colors"
+      <RouterLink
         to="/"
       >
         Home
-      </router-link>
+      </RouterLink>
 
-      <router-link
-        class="p-3 hover:bg-pink-500 hover:text-white transition-colors"
+      <RouterLink
         to="/about"
       >
         About
-      </router-link>
+      </RouterLink>
 
-      <router-link
-        class="p-3 hover:bg-pink-500 hover:text-white transition-colors"
+      <RouterLink
         to="/signup"
       >
         Signup
-      </router-link>
+      </RouterLink>
 
-      <router-link
-        class="p-3 hover:bg-pink-500 hover:text-white transition-colors"
+      <RouterLink
         to="/login"
       >
         Login
-      </router-link>
+      </RouterLink>
     </div>
   </div>
 </template>

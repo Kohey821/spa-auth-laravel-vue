@@ -1,5 +1,9 @@
+<script setup lang="ts">
+import Box from '@/components/Box.vue';
+</script>
+
 <template>
-  <div class="p-4 bg-white rounded shadow-md bg-opacity-50">
-      Home
-  </div>
+  <Box>
+    Home
+  </Box>
 </template>

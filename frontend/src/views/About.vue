@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
 import axios from 'axios';
+import Box from '@/components/Box.vue';
 
 const about = ref<string | unknown>('');
 onMounted(async () => {
@@ -18,7 +19,7 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="p-4 bg-white rounded shadow-md bg-opacity-50">
+  <Box>
     {{ about }}
-  </div>
+  </Box>
 </template>

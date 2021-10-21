@@ -2,6 +2,7 @@
 import { onMounted, ref } from 'vue';
 import axios from 'axios';
 import Box from '@/components/Box.vue';
+import Heading from '@/components/Heading.vue';
 
 const about = ref<string | unknown>('');
 onMounted(async () => {
@@ -20,6 +21,10 @@ onMounted(async () => {
 
 <template>
   <Box>
+    <Heading>
+      アバウト
+    </Heading>
+
     {{ about }}
   </Box>
 </template>

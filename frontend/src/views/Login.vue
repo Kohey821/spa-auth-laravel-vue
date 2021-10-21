@@ -1,9 +1,14 @@
 <script setup lang="ts">
 import BoxCentered from '@/components/BoxCentered.vue';
+import Heading from '@/components/Heading.vue';
 </script>
 
 <template>
   <BoxCentered>
-    Login
+    <Heading>
+      ログイン
+    </Heading>
+
+    ...
   </BoxCentered>
 </template>

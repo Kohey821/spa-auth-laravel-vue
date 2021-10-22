@@ -6,7 +6,7 @@ import Heading from '@/components/Heading.vue';
 import FormInput from '@/components/FormInput.vue';
 
 const email = ref<string>('');
-const emailConfirmation = ref<string>('');
+const name = ref<string>('');
 const password = ref<string>('');
 const passwordConfirmation = ref<string>('');
 
@@ -15,7 +15,7 @@ watchEffect(() => {
   console.log(email.value);
 });
 watchEffect(() => {
-  console.log(emailConfirmation.value);
+  console.log(name.value);
 });
 watchEffect(() => {
   console.log(password.value);
@@ -64,16 +64,16 @@ async function handleSubmit() {
       @submit.prevent="handleSubmit"
     >
       <FormInput
+        name="name"
+        type="text"
+        placeholder="名前"
+        v-model:modelValue="name"
+      />
+      <FormInput
         name="email"
         type="email"
         placeholder="Eメール"
         v-model:modelValue="email"
-      />
-      <FormInput
-        name="emailConfirmation"
-        type="email"
-        placeholder="Eメール確認"
-        v-model:modelValue="emailConfirmation"
       />
       <FormInput
         name="password"

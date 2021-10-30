@@ -4,7 +4,7 @@ import Home from '../views/Home.vue';
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
-    name: 'Home',
+    name: 'home',
     component: Home,
   },
   {
@@ -14,12 +14,12 @@ const routes: Array<RouteRecordRaw> = [
   },
   {
     path: '/login',
-    name: 'Login',
+    name: 'login',
     component: () => import('../views/Login.vue'),
   },
   {
     path: '/signup',
-    name: 'Signup',
+    name: 'signup',
     component: () => import('../views/Signup.vue'),
   },
 ];

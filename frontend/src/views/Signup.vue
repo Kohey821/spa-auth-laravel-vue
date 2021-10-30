@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, watchEffect } from 'vue';
-import axios, { AxiosError } from 'axios';
+import { useRouter } from 'vue-router';
+import axios, { AxiosResponse } from 'axios';
 import BoxCentered from '@/components/BoxCentered.vue';
 import Heading from '@/components/Heading.vue';
 import FormInput from '@/components/FormInput.vue';
@@ -9,6 +10,14 @@ const email = ref<string>('');
 const name = ref<string>('');
 const password = ref<string>('');
 const passwordConfirmation = ref<string>('');
+
+const emailErrors = ref<string[]>([]);
+const nameErrors = ref<string[]>([]);
+const passwordErrors = ref<string[]>([]);
+
+const csrfError = ref<string>('');
+
+const router = useRouter();
 
 // TODO: バリデーション
 watchEffect(() => {
@@ -25,32 +34,64 @@ watchEffect(() => {
 });
 
 // TODO: コンポジション化
-function handleError(error: AxiosError | unknown) {
-  const { dir } = console;
-
-  if (axios.isAxiosError(error)) {
-    dir(error);
-  } else {
-    dir(error);
-  }
-}
 async function initCsrfProction() {
-  const { log } = console;
+  const { dir, log } = console;
 
   try {
-    const result = await axios({
+    await axios({
       method: 'GET',
       url: '/sanctum/csrf-cookie',
     });
-
-    log('csrf保護初期化成功');
-    return result;
   } catch (error) {
-    return handleError(error);
+    if (axios.isAxiosError(error)) {
+      log('axios error');
+      dir(error);
+    } else {
+      log('general error');
+      dir(error);
+    }
+
+    csrfError.value = 'CSRFの初期化に失敗しました';
   }
 }
 async function handleSubmit() {
+  const { dir, log } = console;
+
   await initCsrfProction();
+
+  try {
+    const result = await axios({
+      method: 'POST',
+      url: '/api/register',
+      data: {
+        name: name.value,
+        email: email.value,
+        password: password.value,
+        password_confirmation: passwordConfirmation.value,
+      },
+    });
+
+    dir(result);
+
+    // TODO: 一先ずhomeにリダイレクトするが、変更する
+    router.push({ name: 'home' });
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      // NOTE: もっとスマートな書き方があるはず
+      const { response } = error;
+      const { data } = response as AxiosResponse;
+      const { errors } = data as any;
+      ({
+        name: nameErrors.value,
+        email: emailErrors.value,
+        password: passwordErrors.value,
+      } = errors);
+      dir(errors);
+    } else {
+      log('general error');
+      dir(error);
+    }
+  }
 }
 </script>
 
@@ -68,24 +109,29 @@ async function handleSubmit() {
         type="text"
         placeholder="名前"
         v-model:modelValue="name"
+        :errors="nameErrors"
       />
       <FormInput
         name="email"
         type="email"
         placeholder="Eメール"
         v-model:modelValue="email"
+        :errors="emailErrors"
       />
       <FormInput
         name="password"
         type="password"
         placeholder="パスワード"
         v-model:modelValue="password"
+        :displayErrors="false"
+        :errors="passwordErrors"
       />
       <FormInput
         name="passwordConfirmation"
         type="password"
         placeholder="パスワード確認"
         v-model:modelValue="passwordConfirmation"
+        :errors="passwordErrors"
       />
 
       <!-- TODO: コンポーネント化 -->
@@ -94,6 +140,12 @@ async function handleSubmit() {
       >
         送信
       </button>
+
+      <template v-if="csrfError">
+        <p class="mt-2 text-red-500">
+          {{ csrfError }}
+        </p>
+      </template>
     </form>
   </BoxCentered>
 </template>

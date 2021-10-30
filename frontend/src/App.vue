@@ -1,37 +1,51 @@
 <script setup lang="ts">
-import RouterLink from './components/RouterLink.vue';
+import { ref } from 'vue';
+import Navbar from './components/Navbar.vue';
+import Nav from './components/Nav.vue';
+import NavToggle from './components/NavToggle.vue';
+
+// nav
+const navIsShowing = ref<boolean>(false);
+function toggleNavFlag(flag?: boolean) {
+  navIsShowing.value = typeof flag === 'boolean' ? flag : !navIsShowing.value;
+}
+
+const navbarHeight = 6;
 </script>
 
 <template>
-  <div class="fixed flex flex-col w-full h-full text-xs blur bg-gradient-to-r from-purple-400 via-pink-400 via-green-400 to-red-400">
-    <div class="flex-auto p-4 overflow-y-auto">
-      <router-view/>
+  <div class="text-xs">
+    <Navbar
+      :height='navbarHeight'
+    />
+
+    <Nav
+      class="md:hidden"
+      :isShowing="navIsShowing"
+      :navbarHeight="navbarHeight"
+      @navLinkClicked="toggleNavFlag(false)"
+    />
+
+    <div class="max-w-lg p-2 mx-auto md:flex">
+      <div class="flex-none hidden md:w-28 md:block">
+        <Nav />
+      </div>
+
+      <div class="flex-auto mx-auto md:ml-2">
+        <router-view/>
+      </div>
     </div>
 
-    <div class="flex justify-center flex-none bg-white bg-opacity-50">
-      <RouterLink
-        to="/"
-      >
-        Home
-      </RouterLink>
-
-      <RouterLink
-        to="/about"
-      >
-        About
-      </RouterLink>
-
-      <RouterLink
-        to="/signup"
-      >
-        Signup
-      </RouterLink>
-
-      <RouterLink
-        to="/login"
-      >
-        Login
-      </RouterLink>
-    </div>
+    <NavToggle
+      class="md:hidden"
+      :navIsShowing="navIsShowing"
+      @navToggled="toggleNavFlag"
+    />
   </div>
 </template>
+
+<style>
+body {
+  @apply bg-gradient-to-r from-purple-400 via-pink-400 via-green-400 to-red-400;
+}
+</style>

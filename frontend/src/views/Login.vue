@@ -1,14 +1,14 @@
 <script setup lang="ts">
-import BoxCentered from '@/components/BoxCentered.vue';
+import Box from '@/components/Box.vue';
 import Heading from '@/components/Heading.vue';
 </script>
 
 <template>
-  <BoxCentered>
+  <Box>
     <Heading>
       ログイン
     </Heading>
 
     ...
-  </BoxCentered>
+  </Box>
 </template>

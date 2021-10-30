@@ -2,7 +2,7 @@
 import { ref, watchEffect } from 'vue';
 import { useRouter } from 'vue-router';
 import axios, { AxiosResponse } from 'axios';
-import BoxCentered from '@/components/BoxCentered.vue';
+import Box from '@/components/Box.vue';
 import Heading from '@/components/Heading.vue';
 import FormInput from '@/components/FormInput.vue';
 
@@ -96,7 +96,7 @@ async function handleSubmit() {
 </script>
 
 <template>
-  <BoxCentered>
+  <Box>
     <Heading>
       サイナップ
     </Heading>
@@ -136,7 +136,7 @@ async function handleSubmit() {
 
       <!-- TODO: コンポーネント化 -->
       <button
-        class="w-full py-2 mt-1 text-base text-white bg-blue-500 rounded shadow-md"
+        class="w-full py-2 mt-1 text-base text-white bg-pink-500 rounded shadow-md"
       >
         送信
       </button>
@@ -147,5 +147,5 @@ async function handleSubmit() {
         </p>
       </template>
     </form>
-  </BoxCentered>
+  </Box>
 </template>

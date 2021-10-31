@@ -2,6 +2,7 @@
 import { ref, watchEffect } from 'vue';
 import { useRouter } from 'vue-router';
 import axios, { AxiosResponse } from 'axios';
+import useInitCsrfProtection from '@/compositions/useInitCsrfProtection';
 import Box from '@/components/Box.vue';
 import Heading from '@/components/Heading.vue';
 import FormInput from '@/components/FormInput.vue';
@@ -16,7 +17,10 @@ const emailErrors = ref<string[]>([]);
 const nameErrors = ref<string[]>([]);
 const passwordErrors = ref<string[]>([]);
 
-const csrfError = ref<string>('');
+const {
+  errorMessage: csrfError,
+  initCsrfProtection,
+} = useInitCsrfProtection();
 
 const router = useRouter();
 
@@ -34,31 +38,12 @@ watchEffect(() => {
   console.log(passwordConfirmation.value);
 });
 
-// TODO: コンポジション化
-async function initCsrfProction() {
-  const { dir, log } = console;
-
-  try {
-    await axios({
-      method: 'GET',
-      url: '/sanctum/csrf-cookie',
-    });
-  } catch (error) {
-    if (axios.isAxiosError(error)) {
-      log('axios error');
-      dir(error);
-    } else {
-      log('general error');
-      dir(error);
-    }
-
-    csrfError.value = 'CSRFの初期化に失敗しました';
-  }
-}
 async function handleSubmit() {
   const { dir, log } = console;
 
-  await initCsrfProction();
+  if (!await initCsrfProtection()) {
+    return;
+  }
 
   try {
     const result = await axios({

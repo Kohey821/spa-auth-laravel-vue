@@ -10,8 +10,14 @@ const props = defineProps<{
 
 const heightClassName = `h-${props.height}`;
 
-const signupLink = useLink({ to: 'signup-form' });
-const loginLink = useLink({ to: 'login-form' });
+const {
+  href: signupFormHref,
+  navigate: signupFormNavigate,
+} = useLink({ to: '/signup-form' });
+const {
+  href: loginFormHref,
+  navigate: loginFormNavigate,
+} = useLink({ to: '/login-form' });
 
 const {
   initCsrfProtection,
@@ -63,8 +69,8 @@ async function handleClickLogout() {
         <li>
           <a
             class="underline"
-            :href="signupLink.href"
-            @click="signupLink.navigate"
+            :href="signupFormHref"
+            @click="signupFormNavigate"
           >
             Signup
           </a>
@@ -73,8 +79,8 @@ async function handleClickLogout() {
         <li class="ml-2">
           <a
             class="underline"
-            :href="loginLink.href"
-            @click="loginLink.navigate"
+            :href="loginFormHref"
+            @click="loginFormNavigate"
           >
             Login
           </a>

@@ -1,8 +1,19 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
+import { useRoute } from 'vue-router';
+import { useStore } from './store';
 import Navbar from './components/Navbar.vue';
 import Nav from './components/Nav.vue';
 import NavToggle from './components/NavToggle.vue';
+
+const store = useStore();
+const route = useRoute();
+watch(
+  () => route.params,
+  () => {
+    store.dispatch('getCurrentUser');
+  },
+);
 
 // nav
 const navIsShowing = ref<boolean>(false);

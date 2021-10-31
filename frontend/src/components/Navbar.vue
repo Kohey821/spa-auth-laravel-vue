@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import { defineProps } from 'vue';
+import { computed, defineProps } from 'vue';
 import { useLink, useRouter } from 'vue-router';
 import axios from 'axios';
+import { useStore } from '@/store';
 import useInitCsrfProtection from '@/compositions/useInitCsrfProtection';
 
 const props = defineProps<{
@@ -53,6 +54,9 @@ async function handleClickLogout() {
     }
   }
 }
+
+const store = useStore();
+const currentUser = computed(() => store.state.currentUser);
 </script>
 
 <template>
@@ -66,34 +70,38 @@ async function handleClickLogout() {
       </p>
 
       <ul class="flex">
-        <li>
-          <a
-            class="underline"
-            :href="signupFormHref"
-            @click="signupFormNavigate"
-          >
-            Signup
-          </a>
-        </li>
+        <template v-if="currentUser">
+          <li class="ml-2">
+            <a
+              class="underline cursor-pointer"
+              @click="handleClickLogout"
+            >
+              Logout
+            </a>
+          </li>
+        </template>
 
-        <li class="ml-2">
-          <a
-            class="underline"
-            :href="loginFormHref"
-            @click="loginFormNavigate"
-          >
-            Login
-          </a>
-        </li>
+        <template v-else>
+          <li>
+            <a
+              class="underline"
+              :href="signupFormHref"
+              @click="signupFormNavigate"
+            >
+              Signup
+            </a>
+          </li>
 
-        <li class="ml-2">
-          <a
-            class="underline cursor-pointer"
-            @click="handleClickLogout"
-          >
-            Logout
-          </a>
-        </li>
+          <li class="ml-2">
+            <a
+              class="underline"
+              :href="loginFormHref"
+              @click="loginFormNavigate"
+            >
+              Login
+            </a>
+          </li>
+        </template>
       </ul>
     </div>
   </div>

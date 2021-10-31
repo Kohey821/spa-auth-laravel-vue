@@ -13,14 +13,14 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import('../views/About.vue'),
   },
   {
-    path: '/login',
-    name: 'login',
-    component: () => import('../views/Login.vue'),
+    path: '/login-form',
+    name: 'login-form',
+    component: () => import('../views/LoginForm.vue'),
   },
   {
-    path: '/signup',
-    name: 'signup',
-    component: () => import('../views/Signup.vue'),
+    path: '/signup-form',
+    name: 'signup-form',
+    component: () => import('../views/SignupForm.vue'),
   },
 ];
 

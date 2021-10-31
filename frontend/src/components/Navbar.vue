@@ -10,8 +10,8 @@ const props = defineProps<{
 
 const heightClassName = `h-${props.height}`;
 
-const signupLink = useLink({ to: 'signup' });
-const loginLink = useLink({ to: 'login' });
+const signupLink = useLink({ to: 'signup-form' });
+const loginLink = useLink({ to: 'login-form' });
 
 const {
   initCsrfProtection,

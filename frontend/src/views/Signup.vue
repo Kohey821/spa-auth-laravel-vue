@@ -5,6 +5,7 @@ import axios, { AxiosResponse } from 'axios';
 import Box from '@/components/Box.vue';
 import Heading from '@/components/Heading.vue';
 import FormInput from '@/components/FormInput.vue';
+import FormButton from '@/components/FormButton.vue';
 
 const email = ref<string>('');
 const name = ref<string>('');
@@ -134,18 +135,11 @@ async function handleSubmit() {
         :errors="passwordErrors"
       />
 
-      <!-- TODO: コンポーネント化 -->
-      <button
-        class="w-full py-2 mt-1 text-base text-white bg-pink-500 rounded shadow-md"
+      <FormButton
+        :error="csrfError"
       >
         送信
-      </button>
-
-      <template v-if="csrfError">
-        <p class="mt-2 text-red-500">
-          {{ csrfError }}
-        </p>
-      </template>
+      </FormButton>
     </form>
   </Box>
 </template>

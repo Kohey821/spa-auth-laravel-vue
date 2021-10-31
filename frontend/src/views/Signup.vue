@@ -48,7 +48,7 @@ async function handleSubmit() {
   try {
     const result = await axios({
       method: 'POST',
-      url: '/api/register',
+      url: '/register',
       data: {
         name: name.value,
         email: email.value,

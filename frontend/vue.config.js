@@ -13,6 +13,10 @@ module.exports = {
         target: 'http://localhost:8000',
         changeOrigin: true,
       },
+      '^/register': {
+        target: 'http://localhost:8000',
+        changeOrigin: true,
+      },
       '^/sanctum': {
         target: 'http://localhost:8000',
         changeOrigin: true,

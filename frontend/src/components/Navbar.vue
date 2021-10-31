@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { defineProps } from 'vue';
-import { useLink } from 'vue-router';
+import { useLink, useRouter } from 'vue-router';
+import axios from 'axios';
+import useInitCsrfProtection from '@/compositions/useInitCsrfProtection';
 
 const props = defineProps<{
   height: number,
@@ -10,6 +12,41 @@ const heightClassName = `h-${props.height}`;
 
 const signupLink = useLink({ to: 'signup' });
 const loginLink = useLink({ to: 'login' });
+
+const {
+  initCsrfProtection,
+} = useInitCsrfProtection();
+
+const router = useRouter();
+
+async function handleClickLogout() {
+  const { dir, log } = console;
+
+  if (!await initCsrfProtection()) {
+    return;
+  }
+
+  try {
+    const result = await axios({
+      method: 'POST',
+      url: '/logout',
+    });
+
+    dir(result);
+
+    // TODO: 一先ずhomeにリダイレクトするが、変更する
+    router.push({ name: 'home' });
+  } catch (error) {
+    // TODO: ログアウト失敗処理（があったほうが良い気が...）
+    if (axios.isAxiosError(error)) {
+      log('axios error');
+      dir(error);
+    } else {
+      log('general error');
+      dir(error);
+    }
+  }
+}
 </script>
 
 <template>
@@ -40,6 +77,15 @@ const loginLink = useLink({ to: 'login' });
             @click="loginLink.navigate"
           >
             Login
+          </a>
+        </li>
+
+        <li class="ml-2">
+          <a
+            class="underline cursor-pointer"
+            @click="handleClickLogout"
+          >
+            Logout
           </a>
         </li>
       </ul>

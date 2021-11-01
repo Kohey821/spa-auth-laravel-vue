@@ -39,9 +39,6 @@ async function handleClickLogout() {
       url: '/logout',
     });
 
-    dir(result);
-
-    // TODO: 一先ずhomeにリダイレクトするが、変更する
     router.push({ name: 'home' });
   } catch (error) {
     // TODO: ログアウト失敗処理（があったほうが良い気が...）

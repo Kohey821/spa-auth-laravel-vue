@@ -57,9 +57,6 @@ async function handleSubmit() {
       },
     });
 
-    dir(result);
-
-    // TODO: 一先ずhomeにリダイレクトするが、変更する
     router.push({ name: 'home' });
   } catch (error) {
     if (axios.isAxiosError(error)) {

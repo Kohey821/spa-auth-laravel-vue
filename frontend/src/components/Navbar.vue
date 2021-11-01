@@ -34,7 +34,7 @@ async function handleClickLogout() {
   }
 
   try {
-    const result = await axios({
+    await axios({
       method: 'POST',
       url: '/logout',
     });

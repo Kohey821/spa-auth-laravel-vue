@@ -31,7 +31,7 @@ async function handleSubmit() {
   }
 
   try {
-    const result = await axios({
+    await axios({
       method: 'POST',
       url: '/login',
       data: {

@@ -63,16 +63,18 @@ async function handleSubmit() {
     router.push({ name: 'home' });
   } catch (error) {
     if (axios.isAxiosError(error)) {
-      // NOTE: もっとスマートな書き方があるはず
-      const { response } = error;
-      const { data } = response as AxiosResponse;
+      const { data } = error.response as AxiosResponse;
       const { errors } = data as any;
-      ({
-        name: nameErrors.value,
-        email: emailErrors.value,
-        password: passwordErrors.value,
-      } = errors);
-      dir(errors);
+      if (errors) {
+        ({
+          name: nameErrors.value,
+          email: emailErrors.value,
+          password: passwordErrors.value,
+        } = errors);
+      } else {
+        log('axios error');
+        dir(error);
+      }
     } else {
       log('general error');
       dir(error);

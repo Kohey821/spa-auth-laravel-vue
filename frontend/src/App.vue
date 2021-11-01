@@ -11,7 +11,7 @@ const route = useRoute();
 watch(
   () => route.params,
   () => {
-    store.dispatch('getCurrentUser');
+    store.dispatch('setCurrentUser');
   },
 );
 

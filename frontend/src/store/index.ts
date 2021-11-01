@@ -29,7 +29,7 @@ export const store = createStore<State>({
   },
 
   actions: {
-    async getCurrentUser({ commit }) {
+    async setCurrentUser({ commit }) {
       const { dir, log } = console;
 
       try {

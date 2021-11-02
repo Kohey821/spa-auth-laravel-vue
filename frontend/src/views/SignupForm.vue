@@ -1,21 +1,46 @@
 <script setup lang="ts">
-import { ref, watchEffect } from 'vue';
 import { useRouter } from 'vue-router';
 import axios, { AxiosResponse } from 'axios';
 import useInitCsrfProtection from '@/compositions/useInitCsrfProtection';
+import useValidate from '@/compositions/useValidate';
+import useValidator from '@/compositions/useValidator';
 import Box from '@/components/Box.vue';
 import Heading from '@/components/Heading.vue';
 import FormInput from '@/components/FormInput.vue';
 import FormButton from '@/components/FormButton.vue';
 
-const email = ref<string>('');
-const name = ref<string>('');
-const password = ref<string>('');
-const passwordConfirmation = ref<string>('');
+const {
+  email: emailValidator,
+  minLength: minLengthValidator,
+  required: requiredValidator,
+  same: sameValidator,
+} = useValidator();
 
-const emailErrors = ref<string[]>([]);
-const nameErrors = ref<string[]>([]);
-const passwordErrors = ref<string[]>([]);
+// TODO: submit時のバリデーション
+const {
+  errors: emailErrors,
+  input: email,
+  validate: validateEmail,
+} = useValidate();
+validateEmail([emailValidator(), requiredValidator()]);
+const {
+  errors: nameErrors,
+  input: name,
+  validate: validateName,
+} = useValidate();
+validateName([requiredValidator()]);
+const {
+  errors: passwordErrors,
+  input: password,
+  validate: validatePassword,
+} = useValidate();
+validatePassword([minLengthValidator({ length: 8 })]);
+const {
+  errors: passwordConfirmationErrors,
+  input: passwordConfirmation,
+  validate: validatePasswordConfirmation,
+} = useValidate();
+validatePasswordConfirmation([sameValidator({ prefix: 'パスワード', target: password })]);
 
 const {
   errorMessage: csrfError,
@@ -23,20 +48,6 @@ const {
 } = useInitCsrfProtection();
 
 const router = useRouter();
-
-// TODO: バリデーション
-watchEffect(() => {
-  console.log(email.value);
-});
-watchEffect(() => {
-  console.log(name.value);
-});
-watchEffect(() => {
-  console.log(password.value);
-});
-watchEffect(() => {
-  console.log(passwordConfirmation.value);
-});
 
 async function handleSubmit() {
   const { dir, log } = console;
@@ -108,7 +119,6 @@ async function handleSubmit() {
         type="password"
         placeholder="パスワード"
         v-model:modelValue="password"
-        :displayErrors="false"
         :errors="passwordErrors"
       />
       <FormInput
@@ -116,7 +126,7 @@ async function handleSubmit() {
         type="password"
         placeholder="パスワード確認"
         v-model:modelValue="passwordConfirmation"
-        :errors="passwordErrors"
+        :errors="passwordConfirmationErrors"
       />
 
       <FormButton

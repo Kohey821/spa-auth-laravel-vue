@@ -20,6 +20,9 @@ const {
   navigate: loginFormNavigate,
 } = useLink({ to: '/login-form' });
 
+const store = useStore();
+const currentUser = computed(() => store.state.currentUser);
+
 const {
   initCsrfProtection,
 } = useInitCsrfProtection();
@@ -40,6 +43,7 @@ async function handleClickLogout() {
     });
 
     router.push({ name: 'home' });
+    store.dispatch('setCurrentUser');
   } catch (error) {
     // TODO: ログアウト失敗処理（があったほうが良い気が...）
     if (axios.isAxiosError(error)) {
@@ -51,9 +55,6 @@ async function handleClickLogout() {
     }
   }
 }
-
-const store = useStore();
-const currentUser = computed(() => store.state.currentUser);
 </script>
 
 <template>

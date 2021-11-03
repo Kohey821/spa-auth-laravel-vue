@@ -6,20 +6,40 @@ import {
 } from 'vuex';
 import axios from 'axios';
 
+export type User = {
+  /* eslint-disable camelcase */
+  created_at: string
+  email: string
+  email_verified_at: string | null
+  id: number,
+  name: string,
+  updated_at: string,
+  /* eslint-enable camelcase */
+};
+
 export interface State {
-  // TODO: Recordの型を定義する
-  currentUser: null | Record<string, unknown>;
+  currentUser: null | User;
 }
 
 export const key: InjectionKey<Store<State>> = Symbol('store');
 
-export function useStore(): Store<unknown> {
+export function useStore(): Store<State> {
   return baseUseStore(key);
 }
 
 export const store = createStore<State>({
   state: {
     currentUser: null,
+  },
+
+  getters: {
+    verifiedEmailUserOrGest(state) {
+      if (state.currentUser) {
+        return state.currentUser.email_verified_at;
+      }
+
+      return true;
+    },
   },
 
   mutations: {

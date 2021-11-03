@@ -2,7 +2,7 @@
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import axios, { AxiosResponse } from 'axios';
-import useInitCsrfProtection from '@/compositions/useInitCsrfProtection';
+import useCsrfProtection from '@/compositions/useCsrfProtection';
 import Box from '@/components/Box.vue';
 import Heading from '@/components/Heading.vue';
 import FormInput from '@/components/FormInput.vue';
@@ -19,7 +19,7 @@ const loginFailedError = ref<string>('');
 const {
   errorMessage: csrfError,
   initCsrfProtection,
-} = useInitCsrfProtection();
+} = useCsrfProtection();
 
 const router = useRouter();
 

@@ -2,12 +2,12 @@ import { Ref, ref } from 'vue';
 import axios from 'axios';
 
 // NOTE: functionにインラインで記述したい...
-type UseInitCsrfProtection = {
+type UseCsrfProtection = {
   errorMessage: Ref<string>;
   initCsrfProtection: () => Promise<boolean>;
 };
 
-export default function (): UseInitCsrfProtection {
+export default function (): UseCsrfProtection {
   const errorMessage = ref('');
 
   const initCsrfProtection = async (): Promise<boolean> => {

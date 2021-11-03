@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router';
 import axios, { AxiosResponse } from 'axios';
-import useInitCsrfProtection from '@/compositions/useInitCsrfProtection';
+import useCsrfProtection from '@/compositions/useCsrfProtection';
 import useValidation from '@/compositions/useValidation';
 import useValidator from '@/compositions/useValidator';
 import Box from '@/components/Box.vue';
@@ -45,7 +45,7 @@ registerPasswordConfirmation([sameValidator({ prefix: 'パスワード', target:
 const {
   errorMessage: csrfError,
   initCsrfProtection,
-} = useInitCsrfProtection();
+} = useCsrfProtection();
 
 const router = useRouter();
 

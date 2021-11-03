@@ -3,7 +3,7 @@ import { computed, defineProps } from 'vue';
 import { useLink, useRouter } from 'vue-router';
 import axios from 'axios';
 import { useStore } from '@/store';
-import useInitCsrfProtection from '@/compositions/useInitCsrfProtection';
+import useCsrfProtection from '@/compositions/useCsrfProtection';
 
 const props = defineProps<{
   height: number,
@@ -25,7 +25,7 @@ const currentUser = computed(() => store.state.currentUser);
 
 const {
   initCsrfProtection,
-} = useInitCsrfProtection();
+} = useCsrfProtection();
 
 const router = useRouter();
 

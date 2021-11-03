@@ -71,17 +71,19 @@ async function handleSubmit() {
     router.push({ name: 'home' });
   } catch (error) {
     if (axios.isAxiosError(error)) {
-      const { data } = error.response as AxiosResponse;
-      const { errors } = data as any;
-      if (errors) {
-        ({
-          name: nameErrors.value,
-          email: emailErrors.value,
-          password: passwordErrors.value,
-        } = errors);
-      } else {
-        log('axios error');
-        dir(error);
+      if (error.response) {
+        type Data = Record<string, Record<string, string[]>>;
+        const { errors } = (error.response as AxiosResponse<Data>).data;
+        if (errors) {
+          ({
+            name: nameErrors.value,
+            email: emailErrors.value,
+            password: passwordErrors.value,
+          } = errors);
+        } else {
+          log('axios error');
+          dir(error);
+        }
       }
     } else {
       log('general error');

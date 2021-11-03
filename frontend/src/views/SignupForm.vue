@@ -2,7 +2,7 @@
 import { useRouter } from 'vue-router';
 import axios, { AxiosResponse } from 'axios';
 import useInitCsrfProtection from '@/compositions/useInitCsrfProtection';
-import useValidate from '@/compositions/useValidate';
+import useValidation from '@/compositions/useValidation';
 import useValidator from '@/compositions/useValidator';
 import Box from '@/components/Box.vue';
 import Heading from '@/components/Heading.vue';
@@ -20,27 +20,27 @@ const {
 const {
   errors: emailErrors,
   input: email,
-  validate: validateEmail,
-} = useValidate();
-validateEmail([emailValidator(), requiredValidator()]);
+  register: registerEmail,
+} = useValidation();
+registerEmail([emailValidator(), requiredValidator()]);
 const {
   errors: nameErrors,
   input: name,
-  validate: validateName,
-} = useValidate();
-validateName([requiredValidator()]);
+  register: registerName,
+} = useValidation();
+registerName([requiredValidator()]);
 const {
   errors: passwordErrors,
   input: password,
-  validate: validatePassword,
-} = useValidate();
-validatePassword([minLengthValidator({ length: 8 })]);
+  register: registerPassword,
+} = useValidation();
+registerPassword([minLengthValidator({ length: 8 })]);
 const {
   errors: passwordConfirmationErrors,
   input: passwordConfirmation,
-  validate: validatePasswordConfirmation,
-} = useValidate();
-validatePasswordConfirmation([sameValidator({ prefix: 'パスワード', target: password })]);
+  register: registerPasswordConfirmation,
+} = useValidation();
+registerPasswordConfirmation([sameValidator({ prefix: 'パスワード', target: password })]);
 
 const {
   errorMessage: csrfError,

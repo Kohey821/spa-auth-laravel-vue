@@ -1,6 +1,6 @@
 import { Ref, ref } from 'vue';
 
-export type ValidatorFunction = (value: string) => string;
+export type Validate = (value: string) => string;
 
 export type ValidatorArguments = {
   length?: number,
@@ -8,7 +8,7 @@ export type ValidatorArguments = {
   target?: Ref<string>,
 };
 
-export type Validator = (args?: ValidatorArguments) => ValidatorFunction;
+export type Validator = (args?: ValidatorArguments) => Validate;
 
 export type UseValidator = {
   [key: string]: Validator

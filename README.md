@@ -1,4 +1,4 @@
-# Laravel Vue Login
+# SPA認証サンプル（LaravelとVue）
 
 ## セットアップ
 

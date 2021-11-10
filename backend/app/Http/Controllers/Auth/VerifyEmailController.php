@@ -17,6 +17,7 @@ class VerifyEmailController extends Controller
     {
         $request->fulfill();
 
-        return response('email verification successful', 200);
+        return redirect()
+            ->away(config('app.frontend_url'));
     }
 }

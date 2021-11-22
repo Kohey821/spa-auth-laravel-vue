@@ -8,28 +8,16 @@
 cp .env.default .env
 ```
 
-- appコンテナにアタッチ
+- Laravelをインストール
 
 ```sh
-docker-compose run app bash
+docker-compose run --rm app composer install
 ```
 
-- Laravelインストール
+- テーブルを作成
 
 ```sh
-composer install
-```
-
-- DBテーブル作成
-
-```sh
-php artisan migrate
-```
-
-- appコンテナからデタッチしてコンテナをストップ
-
-```sh
-docker-compose down
+docker-compose run --rm app php artisan migrate
 ```
 
 - Vueをインストール
@@ -44,7 +32,7 @@ npm install
 - コンテナを起動
 
 ```sh
-docker-compose up -d
+docker-compose up
 ```
 
 - devServerを起動

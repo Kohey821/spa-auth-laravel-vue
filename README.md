@@ -41,3 +41,7 @@ docker-compose up
 cd ./frontend
 npm run serve
 ```
+
+[localhost:3000](localhost:3000)で閲覧
+
+メールは[localhost:8025](localhost:8025)で閲覧

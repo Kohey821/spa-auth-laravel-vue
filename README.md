@@ -2,12 +2,6 @@
 
 ## セットアップ
 
-- .env.defaultをコピーして.envを作成
-
-```sh
-cp .env.default .env
-```
-
 - Laravelをインストール
 
 ```sh
